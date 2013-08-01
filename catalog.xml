@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://interactive-answers.webmaster.yandex.ru/schemas/site-0.0.1.xsd" uri="nbproject/private/retriever/interactive-answers.webmaster.yandex.ru/schemas/site-0.0.1.xsd"/>
+</catalog>

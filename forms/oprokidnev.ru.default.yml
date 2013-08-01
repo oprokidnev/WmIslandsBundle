@@ -1,0 +1,5 @@
+handlers:
+  Mail:
+    to: oprokidnev@ya.ru
+    subject: "Сообщение из яндекс островов"
+    template: "@WmIslandsBundle\view\mail\handler.html.twig"

@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://interactive-answers.webmaster.yandex.ru/schemas/site/0.0.1"
+           xmlns="http://interactive-answers.webmaster.yandex.ru/schemas/site/0.0.1">
+
+    <xs:element name="site">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="title" type="xs:string" minOccurs="1"/>
+                <xs:element name="description" type="xs:string" minOccurs="1"/>
+                <xs:element name="requestMethod" type="RequestMethod" minOccurs="0"/>
+                <xs:element name="rootUrl" type="xs:string" minOccurs="1"/>
+                <xs:element name="protocol" type="Protocol" minOccurs="0"/>
+                <xs:element name="resource" type="Resource" minOccurs="1"/>
+                <xs:element name="filters" type="Filters" minOccurs="1"/>
+                <xs:element name="metricaCounterId" type="xs:string" minOccurs="0"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="Protocol">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HTTP"/>
+            <xs:enumeration value="HTTPS"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="RequestMethod">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GET"/>
+            <xs:enumeration value="POST"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Filters">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="dropDown" type="DropDownFilterType"/>
+            <xs:element name="checkBox" type="CheckBoxFilterType"/>
+            <xs:element name="rangeFilter" type="RangeLongFilterType"/>
+            <xs:element name="textBox" type="TextBoxFilterType"/>
+            <xs:element name="constant" type="ConstantFilterType"/>
+            <xs:element name="rangeDate" type="RangeDateFilterType"/>
+            <xs:element name="rangeGeo" type="RangeGeoFilterType"/>
+            <xs:element name="geo" type="GeoFilterType"/>
+            <xs:element name="date" type="DateFilterType"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="Resource">
+        <xs:choice>
+            <xs:element name="fixed" type="FixedResourceType"/>
+            <xs:element name="placeholder" type="PlaceholderResourceType"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="ResourceType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="fixed" type="FixedResourceType"/>
+            <xs:element name="placeholder" type="PlaceholderResourceType"/>
+        </xs:choice>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="terminal" type="xs:boolean" use="optional"/>
+        <xs:attribute name="separator" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="FixedResourceType">
+        <xs:complexContent>
+            <xs:extension base="ResourceType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PlaceholderResourceType">
+        <xs:complexContent>
+            <xs:extension base="ResourceType">
+                <xs:attribute name="required" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TextBoxFilterType">
+        <xs:complexContent>
+            <xs:extension base="FilterType">
+                <xs:attribute name="type" type="TextBoxType" use="required"/>
+                <xs:attribute name="max-chars" type="xs:positiveInteger" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ConstantFilterType">
+        <xs:complexContent>
+            <xs:extension base="FilterType">
+                <xs:attribute name="key" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="TextBoxType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NoFilling"/>
+            <xs:enumeration value="AllUnparsed"/>
+            <xs:enumeration value="WholeQuery"/>
+            <xs:enumeration value="LongestUnparsed"/>
+            <xs:enumeration value="LeftUnparsed"/>
+            <xs:enumeration value="RightUnparsed"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="CheckBoxFilterType">
+        <xs:complexContent>
+            <xs:extension base="FilterType">
+                <xs:sequence>
+                    <xs:element name="checked" type="CheckedValueType"/>
+                    <xs:element name="unchecked" type="UncheckedValueType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CheckedValueType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="dropDown" type="DropDownFilterType"/>
+            <xs:element name="checkBox" type="CheckBoxFilterType"/>
+            <xs:element name="rangeFilter" type="RangeLongFilterType"/>
+            <xs:element name="constant" type="ConstantFilterType"/>
+            <xs:element name="rangeDate" type="RangeDateFilterType"/>
+            <xs:element name="rangeGeo" type="RangeGeoFilterType"/>
+            <xs:element name="geo" type="GeoFilterType"/>
+            <xs:element name="date" type="DateFilterType"/>
+        </xs:choice>
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="default" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="UncheckedValueType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="dropDown" type="DropDownFilterType"/>
+            <xs:element name="checkBox" type="CheckBoxFilterType"/>
+            <xs:element name="rangeFilter" type="RangeLongFilterType"/>
+            <xs:element name="constant" type="ConstantFilterType"/>
+            <xs:element name="rangeDate" type="RangeDateFilterType"/>
+            <xs:element name="rangeGeo" type="RangeGeoFilterType"/>
+            <xs:element name="geo" type="GeoFilterType"/>
+            <xs:element name="date" type="DateFilterType"/>
+        </xs:choice>
+        <xs:attribute name="key" type="xs:string" use="optional"/>
+        <xs:attribute name="default" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="DropDownFilterType">
+        <xs:complexContent>
+            <xs:extension base="FilterType">
+                <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                    <xs:element name="dropDownValue" type="DropDownValueType"/>
+                </xs:sequence>
+                <xs:attribute name="default" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RangeLongFilterType">
+        <xs:sequence>
+            <xs:element name="description">
+                <xs:complexType>
+                    <xs:choice minOccurs="2" maxOccurs="2">
+                        <xs:element name="modifyResource" type="ModifyResourceActionType"/>
+                        <xs:element name="setParameter" type="SetParameterActionType"/>
+                        <xs:element name="updateParameter" type="UpdateParameterActionType"/>
+                    </xs:choice>
+                    <xs:attribute name="caption" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="properties" type="PropertiesType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="min" type="xs:long" use="required"/>
+        <xs:attribute name="max" type="xs:long" use="required"/>
+        <xs:attribute name="step" type="xs:long" use="optional"/>
+        <xs:attribute name="unit" type="xs:string" use="optional"/>
+        <xs:attribute name="required" type="xs:boolean" use="optional"/>
+        <xs:attribute name="captionFrom" type="xs:string" use="optional"/>
+        <xs:attribute name="captionTo" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="DateFilterType">
+        <xs:complexContent>
+            <xs:extension base="FilterType">
+                <xs:attribute name="format" type="xs:string" use="required"/>
+                <xs:attribute name="default" type="xs:integer" use="optional"/>
+                <xs:attribute name="min" type="xs:integer" use="optional"/>
+                <xs:attribute name="max" type="xs:integer" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RangeDateFilterType">
+        <xs:sequence>
+            <xs:element name="description">
+                <xs:complexType>
+                    <xs:choice minOccurs="2" maxOccurs="2">
+                        <xs:element name="modifyResource" type="ModifyResourceActionType"/>
+                        <xs:element name="setParameter" type="SetParameterActionType"/>
+                        <xs:element name="updateParameter" type="UpdateParameterActionType"/>
+                    </xs:choice>
+                    <xs:attribute name="caption" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="properties" type="PropertiesType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="format" type="xs:string" use="required"/>
+        <xs:attribute name="defaultFrom" type="xs:integer" use="optional"/>
+        <xs:attribute name="defaultTo" type="xs:integer" use="optional"/>
+        <xs:attribute name="min" type="xs:integer" use="optional"/>
+        <xs:attribute name="max" type="xs:integer" use="optional"/>
+        <xs:attribute name="captionFrom" type="xs:string" use="optional"/>
+        <xs:attribute name="captionTo" type="xs:string" use="optional"/>
+        <xs:attribute name="required" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="GeoFilterType">
+        <xs:complexContent>
+            <xs:extension base="FilterType">
+                <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                    <xs:element name="geoValue" type="GeoValueType"/>
+                </xs:sequence>
+                <xs:attribute name="useUserRegion" type="xs:boolean" use="optional"/>
+                <xs:attribute name="default" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RangeGeoFilterType">
+        <xs:sequence>
+            <xs:element name="description" minOccurs="1" maxOccurs="2">
+                <xs:complexType>
+                    <xs:choice minOccurs="2" maxOccurs="2">
+                        <xs:element name="modifyResource" type="ModifyResourceActionType"/>
+                        <xs:element name="setParameter" type="SetParameterActionType"/>
+                        <xs:element name="updateParameter" type="UpdateParameterActionType"/>
+                    </xs:choice>
+                    <xs:attribute name="caption" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="properties" type="PropertiesType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="geoValue" type="GeoValueType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="required" type="xs:boolean" use="optional"/>
+        <xs:attribute name="captionFrom" type="xs:string" use="optional"/>
+        <xs:attribute name="captionTo" type="xs:string" use="optional"/>
+        <xs:attribute name="defaultFrom" type="xs:string" use="optional"/>
+        <xs:attribute name="defaultTo" type="xs:string" use="optional"/>
+        <xs:attribute name="useUserRegion" type="FromTo" use="optional"/>
+    </xs:complexType>
+
+    <xs:simpleType name="FromTo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="from"/>
+            <xs:enumeration value="to"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="DropDownValueType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="dropDown" type="DropDownFilterType"/>
+            <xs:element name="checkBox" type="CheckBoxFilterType"/>
+            <xs:element name="rangeFilter" type="RangeLongFilterType"/>
+            <xs:element name="constant" type="ConstantFilterType"/>
+            <xs:element name="rangeDate" type="RangeDateFilterType"/>
+            <xs:element name="rangeGeo" type="RangeGeoFilterType"/>
+            <xs:element name="geo" type="GeoFilterType"/>
+            <xs:element name="date" type="DateFilterType"/>
+        </xs:choice>
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="caption" type="xs:string" use="required"/>
+        <xs:attribute name="default" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="GeoValueType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="dropDown" type="DropDownFilterType"/>
+            <xs:element name="checkBox" type="CheckBoxFilterType"/>
+            <xs:element name="rangeFilter" type="RangeLongFilterType"/>
+            <xs:element name="constant" type="ConstantFilterType"/>
+            <xs:element name="rangeDate" type="RangeDateFilterType"/>
+            <xs:element name="rangeGeo" type="RangeGeoFilterType"/>
+            <xs:element name="geo" type="GeoFilterType"/>
+            <xs:element name="date" type="DateFilterType"/>
+        </xs:choice>
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="caption" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FilterType">
+        <xs:sequence>
+            <xs:element name="description" type="FilterDescriptionType" maxOccurs="1"/>
+            <xs:element name="properties" type="PropertiesType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="required" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="FilterDescriptionType">
+        <xs:choice>
+            <xs:element name="modifyResource" type="ModifyResourceActionType"/>
+            <xs:element name="setParameter" type="SetParameterActionType"/>
+            <xs:element name="updateParameter" type="UpdateParameterActionType"/>
+            <xs:element name="nop" type="xs:string"/>
+        </xs:choice>
+        <xs:attribute name="caption" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ModifyResourceActionType">
+        <xs:attribute name="placeholder" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="SetParameterActionType">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="requestMethod" type="RequestMethod" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="UpdateParameterActionType">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="separator" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PropertiesType">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

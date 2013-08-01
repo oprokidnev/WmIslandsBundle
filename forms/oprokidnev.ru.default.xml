@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://interactive-answers.webmaster.yandex.ru/schemas/site/0.0.1'
+    xsi:schemaLocation='http://interactive-answers.webmaster.yandex.ru/schemas/site/0.0.1 http://interactive-answers.webmaster.yandex.ru/schemas/site-0.0.1.xsd'>
+    <title>Заказ пирожков</title>
+    <description>Заказ пирожков в Екатеринбурге круглосуточно</description>
+    <requestMethod>POST</requestMethod>
+    <rootUrl>http://oprokidnev.ru</rootUrl>
+    <protocol>HTTP</protocol>
+    <resource>
+        <fixed name="oprokidnev.ru/island.php">
+        </fixed>
+    </resource>
+    <filters>
+        <textBox type="LongestUnparsed">
+            <description caption="ФИО">
+                <setParameter name="name" />
+            </description>
+        </textBox>
+        <textBox type="LongestUnparsed">
+            <description caption="Телефон">
+                <setParameter name="phone" />
+            </description>
+        </textBox>
+    </filters>
+    <metricaCounterId></metricaCounterId>
+</site>

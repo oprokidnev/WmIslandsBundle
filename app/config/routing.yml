@@ -1,0 +1,7 @@
+wm_islands:
+    resource: "@WmIslandsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+#_acme_demo:
+#    resource: "@WmIslandsBundle/Resources/config/routing.yml"
+
