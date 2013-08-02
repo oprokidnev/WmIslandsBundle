@@ -1,16 +1,30 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
         <parameter key="wm_islands.service.island.form.parser.class">Wm\IslandsBundle\Service\IslandFormParser</parameter>
+        <parameter key="wm_islands.service.handler.mail_handler.class">Wm\IslandsBundle\Handler\MailHandler</parameter>
+        <parameter key="wm_islands.service.handler.handler_chain_handler.class">Wm\IslandsBundle\Handler\HandlerChainHandler</parameter>
     </parameters>
 
     <services>
         <service id="wm_islands_form_parser" class="%wm_islands.service.island.form.parser.class%">
-           
+        </service>
+        <service id="wm_islands_mail_handler" class="%wm_islands.service.handler.mail_handler.class%">
+            <call method="setSwiftMailer">
+                <argument type="service" id="mailer" />
+            </call>
+            <call method="setRenderer">
+                <argument type="service" id="templating" />
+            </call>
+        </service>
+        <service id="wm_islands_handler_chain_handler" class="%wm_islands.service.handler.handler_chain_handler.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
     </services>
 </container>
