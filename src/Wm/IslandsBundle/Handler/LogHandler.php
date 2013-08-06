@@ -34,6 +34,7 @@ class LogHandler implements HandlerInterface
         ));
         $om->persist($entry);
         $om->flush();
+        return true;
     }
 
     /**

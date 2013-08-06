@@ -5,3 +5,6 @@ handler_chain:
     template: "WmIslandsBundle:Default:mail.html.twig"
     sender: "oprokidnev@ya.ru"
   log_handler:
+response:
+  success_url: "http://oprokidnev.ru/success"
+  failure_url: "http://oprokidnev.ru/bad"

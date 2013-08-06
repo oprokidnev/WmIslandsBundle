@@ -98,7 +98,14 @@ class MailHandler implements HandlerInterface
         );
         $message->setSender($this->getSender());
         $message->setFrom('islands-no-reply@webmotor.ru');
-        return $mailer->send($message);
+        try {
+            $mailer->send($message);
+            $mailer->getTransport()->stop();
+            $mailer->getTransport()->start();
+        } catch (Exception $exc) {
+            return false;
+        }
+        return true;
     }
 
     /**

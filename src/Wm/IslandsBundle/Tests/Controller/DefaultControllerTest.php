@@ -6,12 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+
     public function testIndex()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $json = $client->request('POST', '/oprokidnev.ru.default', array(
+            'phone'=>'+7-912-22-22-222',
+            'name'=>'Опрокиднев Андрей Алексеевич',
+        ));
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $this->assertTrue(is_array(json_decode($json,true)));
     }
+
 }

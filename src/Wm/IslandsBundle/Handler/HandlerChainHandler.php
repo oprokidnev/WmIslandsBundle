@@ -36,7 +36,11 @@ class HandlerChainHandler implements HandlerInterface
     {
         $result = true;
         foreach ($this->handlers as $handler) {
-            $result = $handler->handle($form) && $result;
+            try {
+                $result = $handler->handle($form) && $result;
+            } catch (\Exception $exc) {
+                $result = false;
+            }
         }
         return $result;
     }

@@ -9,6 +9,7 @@
         <parameter key="wm_islands.service.handler.mail_handler.class">Wm\IslandsBundle\Handler\MailHandler</parameter>
         <parameter key="wm_islands.service.handler.handler_chain_handler.class">Wm\IslandsBundle\Handler\HandlerChainHandler</parameter>
         <parameter key="wm_islands.service.handler.log_handler.class">Wm\IslandsBundle\Handler\LogHandler</parameter>
+        <parameter key="wm_islands.service.logger.class">Wm\IslandsBundle\Log\Logger</parameter>
     </parameters>
 
     <services>
@@ -31,6 +32,10 @@
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
+        </service>
+        <service id="wm_islands_logger" class="%wm_islands.service.logger.class%">
+            <argument>%kernel.root_dir%/../log/islands/success.log</argument>
+            <argument>%kernel.root_dir%/../log/islands/error.log</argument>
         </service>
     </services>
 </container>
