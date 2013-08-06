@@ -5,7 +5,7 @@ namespace Wm\IslandsBundle\Handler;
 use \Symfony\Component\Templating\EngineInterface;
 
 /**
- * Description of Mail
+ * Mail handler 
  *
  * @author oprokidnev
  */
@@ -90,10 +90,15 @@ class MailHandler implements HandlerInterface
         $message = $mailer->createMessage();
         $message->addTo($this->getTo());
         $message->setSubject($this->getSubject());
-        $message->setBody($this->getRenderer()->render($this->getTemplate(), $form->getData()));
+        $message->setContentType('text/html');
+        $message->setBody(
+            $this->getRenderer()->render(
+                $this->getTemplate(), ['form' => $form->createView(), 'data' => $form->getData()]
+            )
+        );
         $message->setSender($this->getSender());
+        $message->setFrom('islands-no-reply@webmotor.ru');
         return $mailer->send($message);
-        ;
     }
 
     /**

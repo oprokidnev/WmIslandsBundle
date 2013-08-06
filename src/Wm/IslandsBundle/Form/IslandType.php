@@ -34,7 +34,6 @@ class IslandType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->fields as $field) {
-            print_r($field);
             call_user_func_array([$builder, 'add'], $field);
         }
     }

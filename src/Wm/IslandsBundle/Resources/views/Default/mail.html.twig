@@ -1,1 +1,3 @@
-1231231321
+{% for key in data|keys %}
+<strong>{{form_label(form[key])}}</strong>: {{data[key]}} <br/>
+{% endfor %}

@@ -98,7 +98,9 @@ class HandlerChainHandler implements HandlerInterface
          * Initializing handlers
          */
         foreach ($parameters as $serviceName => $handlerParameters) {
-            $this->handlers [] = $this->getContainer()->get('wm_islands_' . $serviceName)->setParameters(@$parameters[$serviceName]);
+            $this->handlers [] = $this->getContainer()
+                ->get('wm_islands_' . $serviceName)
+                ->setParameters(@$parameters[$serviceName]);
         }
 
         return $this;

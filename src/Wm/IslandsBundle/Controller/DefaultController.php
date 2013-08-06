@@ -41,7 +41,6 @@ class DefaultController extends Controller
                 }
                 $handler = $this->get('wm_islands_handler_chain_handler')->setParameters($handlerConfig)->handle($form);
 
-
                 return new \Symfony\Component\HttpFoundation\JsonResponse([
                     'success'  => true,
                     'error'    => [],

@@ -3,4 +3,5 @@ handler_chain:
     to: aa@oprokidnev.ru
     subject: "Сообщение из яндекс островов"
     template: "WmIslandsBundle:Default:mail.html.twig"
-    sender: oprokidnev@ya.ru
+    sender: "oprokidnev@ya.ru"
+  log_handler:

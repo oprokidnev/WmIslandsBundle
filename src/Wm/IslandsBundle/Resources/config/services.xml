@@ -8,6 +8,7 @@
         <parameter key="wm_islands.service.island.form.parser.class">Wm\IslandsBundle\Service\IslandFormParser</parameter>
         <parameter key="wm_islands.service.handler.mail_handler.class">Wm\IslandsBundle\Handler\MailHandler</parameter>
         <parameter key="wm_islands.service.handler.handler_chain_handler.class">Wm\IslandsBundle\Handler\HandlerChainHandler</parameter>
+        <parameter key="wm_islands.service.handler.log_handler.class">Wm\IslandsBundle\Handler\LogHandler</parameter>
     </parameters>
 
     <services>
@@ -19,6 +20,11 @@
             </call>
             <call method="setRenderer">
                 <argument type="service" id="templating" />
+            </call>
+        </service>
+        <service id="wm_islands_log_handler" class="%wm_islands.service.handler.log_handler.class%">
+            <call method="setObjectManager">
+                <argument type="service" id="doctrine.orm.entity_manager" />
             </call>
         </service>
         <service id="wm_islands_handler_chain_handler" class="%wm_islands.service.handler.handler_chain_handler.class%">

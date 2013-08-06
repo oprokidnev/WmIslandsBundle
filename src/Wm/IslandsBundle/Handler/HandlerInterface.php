@@ -16,6 +16,11 @@ interface HandlerInterface
      * @return boolean Description
      */
     public function handle(Form $form);
+    
+    /**
+     * @param array Array of parameters for logger
+     * @return HandlerInterface Description
+     */
 }
 
 ?>
