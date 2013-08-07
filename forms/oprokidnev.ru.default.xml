@@ -9,7 +9,7 @@
     <rootUrl>http://oprokidnev.ru</rootUrl>
     <protocol>HTTP</protocol>
     <resource>
-        <fixed name="islands.localhost/oprokidnev.ru.default">
+        <fixed name="oprokidnev.ru/island.php">
         </fixed>
     </resource>
     <filters>
